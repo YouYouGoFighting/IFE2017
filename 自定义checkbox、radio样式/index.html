@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自定义checkbox、radio样式</title>
+	<style>
+		input{
+			display: none;
+		}
+		.radioWrap label {
+			display: inline-block;
+			width: 16px;
+			height: 16px;
+			border: 1px solid #d9d9d9;
+			border-radius: 50%;
+			position: relative;
+	  	}
+
+	  	/*画实心圆*/
+	  	.radioWrap label::after {
+	  		-webkit-transition: all .5s ease;
+		    -moz-transition: all .5s ease;
+		    -o-transition: all .5s ease;
+		    -ms-transition: all .5s ease;
+	  		transition: all .5s ease;
+		    cursor: pointer;
+		    position: absolute;
+		    width: 6px;
+		    height: 6px;
+		    border-radius: 50%;
+		    top: 5px;
+		    left: 4.6px;
+		    content: '';
+	  	}
+
+	  	.checkBoxWrap label {
+			display: inline-block;
+			width: 16px;
+			height: 16px;
+			border: 1px solid #d9d9d9;
+			position: relative;
+	  	}
+		
+	  	.checkBoxWrap label::after {
+	  		width: 9px;
+	  		height: 5px;
+	  		position: absolute;
+	  		top: 3px;
+    		left: 3px;
+	  		content: '';
+	  	}
+		
+		/*选中时状态改变*/
+	  	.radioWrap input[type=radio]:checked + label::after {
+		    background: #d73d32;
+		}
+
+		.radioWrap input[type=radio]:checked + label {
+		    border: 1px solid #d73d32;
+		}
+
+		.checkBoxWrap input[type=checkbox]:checked + label::after {
+		    border: 2px solid #d73d32;
+	  		border-top: none;
+	  		border-right: none;
+	  		-webkit-transform: rotate(-45deg);
+		    -moz-transform: rotate(-45deg);
+		    -o-transform: rotate(-45deg);
+		    -ms-transform: rotate(-45deg);
+	  		transform: rotate(-45deg);
+		}
+
+		.checkBoxWrap input[type=checkbox]:checked + label {
+		    border: 1px solid #d73d32;
+		}
+
+	</style>
+</head>
+<body>
+    <div class="radioWrap"> radio: 
+      <input type="radio" name="rad" id="radio1"/>
+      <label for="radio1"></label>
+      <input type="radio" name="rad" id="radio2"/>
+      <label for="radio2"></label>
+    </div>
+    <div class="checkBoxWrap"> checkbox:
+      <input type="checkbox" id="checkBox1">
+      <label for="checkBox1"></label>
+    </div>
+</body>
+</html>
