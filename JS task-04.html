@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>任务18</title>
+<style>
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	#addRight{
+		margin-right: 20px;
+	}
+	#ul{
+		overflow: hidden;
+	}
+	.box{
+		width: 40px;
+		height: 40px;
+		background: red;
+		font-size: 20px;
+		color: white;
+		line-height: 40px;
+		text-align: center;
+		margin: 6px;
+		list-style: none;
+		float: left;
+	}
+</style>
+<script>
+window.onload=function(){
+	var oTxt = document.getElementById("txt");
+	var addLeft = document.getElementById("addLeft");
+	var addRight = document.getElementById("addRight");
+	var reLeft = document.getElementById("reLeft");
+	var reRight = document.getElementById("reRight");
+	var oUl = document.getElementById("ul");
+	var aLi = oUl.getElementsByTagName("li");
+	var addData = new Array;
+
+	//左进
+	addLeft.onclick=function(){
+		var input = oTxt.value.trim();
+		if ((/^[0-9]+$/).test(input)) {
+			var oLi = document.createElement("li");
+			var aLi = oUl.getElementsByTagName("li");
+			oLi.className = 'box';
+			oLi.innerHTML = input;
+			oTxt.value = '';
+			if(aLi.length == 0){
+				oUl.appendChild(oLi);
+			}
+			else{
+				oUl.insertBefore(oLi,aLi[0]);
+			}
+		}
+		else {
+			alert("请输入一组数字");
+		}
+	};
+
+	//右禁
+	addRight.onclick=function(){
+		var input = oTxt.value.trim();
+		if ((/^[\d]+$/).test(input)) {
+			var oLi = document.createElement("li");
+			var aLi = oUl.getElementsByTagName("li");
+			oLi.className = 'box';
+			oLi.innerHTML = input;
+			oTxt.value = '';
+			oUl.appendChild(oLi);
+		}
+		else {
+			alert("请输入一组数字");
+		}
+	}
+	
+	//左出
+	reLeft.onclick = function (){
+		alert(oUl.children[0].innerHTML);
+		oUl.removeChild(oUl.children[0]);
+		return false;
+	};
+
+	//右出
+	reRight.onclick = function (){
+		var aLi = oUl.getElementsByTagName("li");
+		alert(oUl.children[aLi.length-1].innerHTML);
+		oUl.removeChild(oUl.children[aLi.length-1]);
+	};
+};
+</script>
+</head>
+
+<body>
+<input id="txt" type="text" />
+<input id="addLeft" type="button"  value="左侧入">
+<input id="addRight" type="button"  value="右侧入">
+
+<input id="reLeft" type="button"  value="左侧出">
+<input id="reRight" type="button"  value="右侧出">
+<ul id="ul">
+	<!-- <li></li> -->
+</ul>
+</body>
+</html>
