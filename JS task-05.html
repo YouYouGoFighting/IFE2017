@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JS task-05</title>
+<style>
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	#ul{
+		display: flex;
+		align-items: flex-end;
+		justify-content: flex-start;
+		margin-top: 10px;
+    	vertical-align: bottom;
+    	height: 505px;
+	}
+	#ul li{
+		display: inline-block;
+	    margin-left: 5px;
+	    width: 15px;
+	    background-color: red;
+	    color: #FFFFFF;
+	    list-style-type: none;
+	    font-size: 8px;
+	}
+</style>
+
+</head>
+<body>
+<input id="txt" type="text" placeholder="请输入一个10到100的整数" />
+<input id="leftIn" type="button" value="左侧入" />
+<input id="rightIn" type="button" value="右侧入" />
+<input id="leftOut" type="button" value="左侧出" />
+<input id="rightOut" type="button" value="右侧出" />
+<input id="random" type="button"  value="随机生成一组数据" />
+<input id="sortdata" type="button"  value="冒泡排序" />
+
+<ul id="ul">
+	<!-- <li></li> -->
+</ul>
+
+<script>
+//夸浏览器绑定事件
+function addEventHandler (ele, event, handler){
+	if (ele.addEventListener){
+		ele.addEventListener(event, handler, false);
+	}
+	else if (ele.attachEvent){
+		ele.attachEvent("on" + event, handler);
+	}
+	else {
+		ele["on" + event] = handler;
+	}
+}
+
+	var data = [];
+	var random = document.getElementById("random");
+	var oUl = document.getElementById("ul");
+	var sort = document.getElementById("sortdata");
+
+	//渲染数组
+	function render() {
+		oUl.innerHTML = data.map(function(d){
+			return '<li style=height:' + d * 5 + 'px></li>'; 
+		}).join('');
+	}
+
+	//验证输入的合法性
+	function inputNum(){
+		input=document.getElementById("txt").value.trim();
+		if(data.length>=60){alert("数据已满");return 0;}
+		if(input>=100||input< 10){alert("输入不合法");return 0;}
+		if(input==""){alert("输入不合法");return 0;}
+		if(isNaN(input)){alert("输入不合法");return 0;}
+	}
+
+	//左侧入
+	var lIn = document.getElementById("leftIn").onclick = function(){
+		if (inputNum() == 0) return;
+		data.splice(0,0,input);
+		render();
+	};
+
+	//右侧入
+	var rIn = document.getElementById("rightIn").onclick = function(){
+		if (inputNum() == 0) return;
+		data.push(input);
+		render();
+	};
+
+	//左侧出
+	var lOut = document.getElementById("leftOut").onclick = function(){
+		alert(data.splice(0,1));
+		render();
+	};
+
+	//右侧出
+	var rOut = document.getElementById("rightOut").onclick = function(){
+		alert(data.pop());
+		render();
+	};
+
+	//随机生成50组数据
+	function randomData (){
+		for (var i = 0; i < 50; i++){
+			data[i] = Math.floor(Math.random()*91 + 10);
+		}
+		render();
+	}
+
+	//对数组排序
+	function sortData (){
+		var i = 0,j = 1,temp;
+				len = data.length;
+				timer = null;
+		timer = setInterval(run,30);
+		function run() {
+			if (i < len) {
+				if (j < len) {
+					if (data[i] > data[j]) {
+						temp = data[i];
+						data[i] = data[j];
+						data[j] = temp;
+						render();
+					}
+					j++;
+				} 
+				else {
+					i++;
+					j = i + 1;
+				}
+			} else {
+				clearInterval(timer);
+				return;
+			}
+		}
+	}
+
+	//事件绑定
+	addEventHandler(random, "click", function(){randomData()});
+	addEventHandler(sort, "click", function(){sortData()});
+
+</script>
+</body>
+</html>
