@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>JS form-01</title>
+	<style>
+		table{
+			margin: 50px auto;
+		}
+		td:first-child {
+			height: 50px;
+			font-size: 24px;
+			padding-right: 30px;
+		}
+		td:nth-child(3) {
+			padding-left: 10px;
+		}
+		input {
+			width: 250px;
+			height: 32px;
+			border-radius: 5px;
+			border-color: #ccc;
+		}
+		button {
+			background-color: #2563AD;
+			color: #fff;
+			height: 40px;
+			width: 90px;
+			font-size: 24px;
+			border: none;
+			border-radius: 5px;
+		}
+		#info {
+			color: #ccc;
+			font-size: 20px;
+			vertical-align: top;
+		}
+	</style>
+</head>
+
+<body>
+
+	<table>
+		<tr>
+			<td>名称</td>
+			<td><input id="input" type="text"></td>
+			<td><button id="btnOk">验证</button></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td id="info">必填，长度为4~16个字符</td>
+			<td></td>
+		</tr>
+	</table>
+
+	<script>
+	document.getElementById("btnOk").onclick = function () {
+		var infoWord = document.getElementById("info");
+		var input = document.getElementById("input").value.trim();
+		if (input == '') {
+			infoWord.innerHTML = "名称不能为空";
+			infoWord.style.color = 'red';
+		}
+		else if (getByteLen(input) < 4 || getByteLen(input) > 16) {
+			infoWord.innerHTML = "请输入长度为4~16个字符";
+			infoWord.style.color = "red";
+		}
+		else {
+			infoWord.innerHTML = "名称格式正确"
+			infoWord.style.color = "green";
+		}
+	};
+
+	//获取字符串长度（中文、中文符号算两个字符，字母数字、英文符号算一个）
+	function getByteLen(input) {
+		var len = 0;
+		for (var i = 0; i < input.length; i++) {
+			var a = input.charAt(i);
+			if (a.match(/[^\x00-\xff]/ig) !== null) {
+				len += 2;
+			}
+			else {
+				len += 1;
+			}
+		}
+		return len;
+	}
+
+	</script>
+</body>
+</html>
